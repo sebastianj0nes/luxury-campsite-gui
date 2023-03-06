@@ -10,7 +10,7 @@ Following an object-oriented approach, the following features were implemented.
 - JavaFX - making use of SceneBuilder to help conceptualise our GUI.
 
 ## Installation 
-The finished product can be viewed by cloning the repo and running the 'AccommodationSystemGUI.java' file inside the 'gui' package.
+The finished product can be viewed by cloning the repo and running the 'AccommodationSystemGUI.java' file inside the 'gui' package. JavaFX will have to be installed on your own computer to allow for GUI functionality.
 
 ## Usage
 The application has no database, so be cautious that any values entered will be deleted upon closing the GUI.
