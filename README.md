@@ -1,11 +1,11 @@
 # Luxury Campsite GUI 
 
 ## Description 
-GUI Application that has been designed and built for a campsite owner, to allow them to manage bookings of guests. The GUI has been conceptualised by using UML modelling, making Use-case diagrams and then a Class diagram. After completing the diagrams to conceptualise how the classes would interact, the classes were made and implemented using JavaFX. 
+GUI Application that has been designed and built for a campsite owner, to allow them to manage bookings of guests. The GUI has been conceptualised by using UML modelling, making Use-case, Class & Sequence Diagrams. After completing the diagrams to conceptualise how the classes would interact, the classes were made and implemented using JavaFX. 
 
 ## Features
 Following an object-oriented approach, the following features were implemented.
-- Modelling - (Use Case & Class Diagrams)
+- Modelling - (Use Case, Class & Sequence Diagrams)
 - Class interface implementation - ensuring classes interact with each other
 - JavaFX - making use of SceneBuilder to help conceptualise our GUI.
 
