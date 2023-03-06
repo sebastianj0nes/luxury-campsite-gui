@@ -6,7 +6,7 @@ GUI Application that has been designed and built for a campsite owner, to allow 
 ## Features
 Following an object-oriented approach, the following features were implemented.
 - Modelling - (Use Case & Class Diagrams)
-- Class interface implementation - ensuring classes interact with each other 
+- Class interface implementation - ensuring classes interact with each other
 - JavaFX - making use of SceneBuilder to help conceptualise our GUI.
 
 ## Installation 
