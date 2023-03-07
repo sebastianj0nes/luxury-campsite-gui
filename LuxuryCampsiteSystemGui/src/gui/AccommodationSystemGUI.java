@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gui;
 
 import java.io.IOException;
@@ -15,6 +10,9 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
+/*
+Author Seb Jones
+*/
 
 // https://code.makery.ch/blog/javafx-8-event-handling-examples/
 // https://docs.oracle.com/javafx/2/get_started/fxml_tutorial.htm

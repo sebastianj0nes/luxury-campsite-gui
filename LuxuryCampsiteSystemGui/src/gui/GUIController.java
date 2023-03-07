@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package gui;
 
 import java.net.URL;
@@ -31,33 +27,21 @@ import model.Area;
 import model.Booking;
 import model.CleaningStatus;
 import model.Guest;
+/*
+Author Seb Jones
+*/
 
-/**
- * FXML Controller class
- *
- * @author Ben
- */
 public class GUIController implements Initializable {
     
+    // Data Fields for Array Lists
     private ObservableList<Area> areaData = FXCollections.observableArrayList();
     private ObservableList<CleaningStatus> cleaningStatusData = FXCollections.observableArrayList();
     private ObservableList<AccommodationRow> tableData = FXCollections.observableArrayList();
     private LuxuryCampSiteSystem accommodationSystem = null;
 
+    // Generated FXML elements
     @FXML
     private TableView<AccommodationRow> myHTable;
-    /*
-    private TableColumn<AccommodationRow, String> myHTableNumber;
-    private TableColumn<AccommodationRow, String> myHTableAccomType;
-    private TableColumn<AccommodationRow, String> myHTableOccupancy;
-    private TableColumn<AccommodationRow, String> myHTableAvail;
-    private TableColumn<AccommodationRow, String> myHTableStatus;
-    private TableColumn<AccommodationRow, String> myHTableGuests;
-    private TableColumn<AccommodationRow, String> myHTableBreakfast;
-    private TextField hAccomNum;
-    private TextField hFirstName;
-    */
-
     @FXML
     private ChoiceBox<Area> choiceBox;
     @FXML
@@ -92,10 +76,8 @@ public class GUIController implements Initializable {
     private TextField costPerNight;
     @FXML
     private TextArea areaDesc;
-    
     @FXML
     private Button checkInButton;
-    
     @FXML
     private Button checkOutButton;
     @FXML
@@ -121,14 +103,13 @@ public class GUIController implements Initializable {
         
         System.out.println("DEBUG: Initialize() called");
         
+        // Setting actions for the area field and cleaning status choice boxes
         choiceBox.setOnAction(this::cbAreaOnAction);
         
         cleaningStatus.setOnAction(this::cbCleaningStatusOnAction);
 
-        
         //INITIALIZE TABLE COLUMNS
         // Associating each column (e.g. myHTableNumber) with instance name (e.g. "number")
-
         tableNumber.setCellValueFactory(new PropertyValueFactory<AccommodationRow, String>("number"));
         tableAccomType.setCellValueFactory(new PropertyValueFactory<AccommodationRow, String>("type"));
         tableOccupancy.setCellValueFactory(new PropertyValueFactory<AccommodationRow, String>("occupancy"));
@@ -137,94 +118,108 @@ public class GUIController implements Initializable {
         tableGuests.setCellValueFactory(new PropertyValueFactory<AccommodationRow, String>("numberGuests"));
         tableBreakfast.setCellValueFactory(new PropertyValueFactory<AccommodationRow, String>("breakfast"));
 
-        //INITIALIZE THE ACCOMMODATION SYSTEM AND LOAD DUMMY DATA
         // Storing accommodation system in a state variable for reusability
         LuxuryCampSiteSystem accommodationSystem = LuxuryCampSiteSystem.getInstance();
         // accommodationSystem.initializeDummyData();
         
-        //Storing accommodation system
+        // Storing accommodation system
         setAccommodationSystem(accommodationSystem);
         
+        // Get all areas of the accommodation system
         ArrayList<Area> areas = accommodationSystem.getAreas();
         
+        // For loop - run through all areas and add them to the data 
         for (int i = 0; i<areas.size(); i++)
         {
             areaData.add(areas.get(i));
         }
-        
+        // Setting the area dropdown with the area data 
         choiceBox.setItems(areaData);
         choiceBox.setValue(areaData.get(0));
         
+        // Adding cleaning status enum options to the data of cleaning status choice box
         cleaningStatusData.add(CleaningStatus.CLEAN);
         cleaningStatusData.add(CleaningStatus.REQUIRES_CLEANING);
 
         cleaningStatus.setItems(cleaningStatusData);
         cleaningStatus.setValue(cleaningStatusData.get(0));
         
-        //POPULATE TABLE WITH DUMMY DATA
+        // Start by populating table with first area
         populateTable(areaData.get(0));
     
     }
     
-        
+       // Set accommodation system
        private void setAccommodationSystem(LuxuryCampSiteSystem accommodationSystem)
        {
            this.accommodationSystem = accommodationSystem;
        }
        
+       // Get accommodation system
        private LuxuryCampSiteSystem getAccommodationSystem()
        {
            return this.accommodationSystem;
        }
         
-       
+       // Populate table method passing in an area as argument
        private void populateTable(Area area)
        {
            System.out.println("populateTableCalled");
            
-           // We need to now iterate or loop through the accommodation.
-           // For each accommodation create a new row within the table
-           
-           ArrayList<Accommodation> accommodations = area.getAccommodations();
+            // Create Array list to hold all areas
+            ArrayList<Accommodation> accommodations = area.getAccommodations();
 
-        // Initially clear the table
-        tableData.clear();
+            // Initially clear the table
+            tableData.clear();
 
+        // Loop through accommodations 
         for (Accommodation accommodation : accommodations) 
         {
-            // Now retrieve each accommodation and transfer into the AccommodationRow,
-            // to add to the table.
+            // Set initial occupancy to onccupied as at start there are no bookings
             String occupancy = "Unoccupied";
+            // If there is a booking set the accommodartion to occupied
             if (accommodation.isOccupied())
             {
                 occupancy = "Occupied";
             }
-            
+            // Set initial values to default with no booking
             String numberGuests = "";
             String breakfastRequired = "No";
             
+            // If an accommodation has a booking
             if (accommodation.hasGuestBooking())
             {
+                // Get the guest booking
                 Booking guestBooking = accommodation.getGuestBooking();
+                // Store number of guests in 'noGuests'
                 int noGuests = guestBooking.getNumberGuests();
+                // If there are guests
                 if (noGuests > 0)
                 {
+                    // Set the number of guests to value of guests staying
                     numberGuests = Integer.toString(noGuests);
                 }
                 
+                // Initialise boolean to store value if  requires breakfast
                 boolean isBreakfastRequired = guestBooking.getRequiresBreakfast();
+                // If there are breakfast
                 if (isBreakfastRequired)
                 {
+                    // Store yes
                     breakfastRequired = "Yes";
                 }
             }
             
+            // Initialise variable to hold availability of area
             String availability = "Unavailable";
+            // If accommodation is available
             if (accommodation.isAvailable())
             {
+                // Set value to available
                 availability = "Available";
             }
             
+            // Add accommodation rows passing in all the values initialised to the table data
             tableData.add(new AccommodationRow(String.valueOf(accommodation.getAccommodationNo()),
                     accommodation.getType(),
                     occupancy,
@@ -234,187 +229,144 @@ public class GUIController implements Initializable {
                     breakfastRequired));
         }
 
-        // Set the table with the new data to show
+        // Set table with all data inputted
         myHTable.setItems(tableData);
        }
-    // Based on an accommodation number, find the associated Accommodation object.
+    // Get accommodation method passing in an area and accommodation number
     private Accommodation getAccommmdation(Area area, int accommNo)
     {
+        // Array list to hold all accommodations in each area
         ArrayList<Accommodation> accommodations = area.getAccommodations();
         
+        // Set initial found variable to null
         Accommodation foundAccommodation = null;
 
+        // Loop through accommodations
         for (Accommodation accommodation : accommodations) 
         {
+            // If the accom number matches passed in the argument passed
             if (accommodation.getAccommodationNo() == accommNo)
             {
-                // Found the object
+                // Set found accommodation to the matching accommodation
                 foundAccommodation = accommodation;
                 break;
             }
         }
         
+        // Pass out the found accommodation
         return foundAccommodation;
     }
-
-    // This was generated from XML, right click on the FXML and select Make Controller.
-    /*
-    @FXML
-    private void OnTableClicked(MouseEvent event) 
-    {
-        // Reset the fields
-        firstName.setText("");
-        surname.setText("");
-        
-        AccommodationRow accommodationRow = myHTable.getSelectionModel().getSelectedItem();
-        // int selectedIndex = myHTable.getSelectionModel().getSelectedIndex();
-        
-        if (accommodationRow != null) 
-        {
-            // Retrieve the accommodation number of the selected row
-            // and find the associated accommodation object in the system.
-            // Then set the text fields with the values.
-            System.out.println(accommodationRow.getNumber());
-            
-            // Retrieve the values from the Accommodation Row for the selected row
-            // Example below:
-            int accommNo = Integer.valueOf(accommodationRow.getNumber());
-            
-            // Find the associated accommodation object based on the unique
-            // accommodation number
-            /* TEMP REMOVED
-            Accommodation selectedAccommodation = getAccommmdation(accommNo);
-            
-            if (selectedAccommodation.hasGuestBooking())
-            {
-                GuestBooking associatedGuestBooking = selectedAccommodation.getGuestBooking();
-                String firstName = associatedGuestBooking.getFirstName();
-                
-                // Set the text field
-                hFirstName.setText(firstName);
-                
-            }
-*/
- /*           
-            // Set the text field
-            accomNum.setText(String.valueOf(accommNo));
-            
-            
-        }
-    }
-*/
-    
+ 
+    // Event handler for area choice box
     private void cbAreaOnAction(ActionEvent event)
     {
+        // Initialise area object with chosen value
         Area area = choiceBox.getValue();
         
+        // Populate the table with information from chosen area
         populateTable(area);
     }
 
+    // Event handler for cleaning status choice box
     private void cbCleaningStatusOnAction(ActionEvent event)
     {       
+        // Initialise area object with chosen value
         Area area = choiceBox.getValue();
 
-        // Retrieve the values from the Accommodation Row for the selected row
-        // Example below:
+        // Set accommodation row to chosen row item
         AccommodationRow accommodationRow = myHTable.getSelectionModel().getSelectedItem();
+        // If there is an accommodation row
         if (accommodationRow != null)
         {
-
+            // Set accommodation number to the int value of accommodation row
             int accommNo = Integer.valueOf(accommodationRow.getNumber());
-            // Find the associated accommodation object based on the unique
-            // accommodation number           
+            // Create selected accommodation by calling getAccommodation passing in area and accomm number
             Accommodation selectedAccommodation = getAccommmdation(area, accommNo);
-
+            // Set the cleaning status after getting the value
             selectedAccommodation.setCleaningStatus(cleaningStatus.getValue());
-
+            // Populate the table with the appropriate area data
             populateTable(area);
         }
     }
-//    @FXML
-//    private void OnTableClicked(MouseEvent event) {
-//        
-//        
-//        
-//        
-//    }
 
+    // Event handler for clicking on anywhere in table
     @FXML
     private void OnTableClicked(MouseEvent event) 
     {
-
-        // Reset the fields
+        // Initially reset all fields 
+        // Guest fields
         firstName.setText("");
         surname.setText("");
         telNum.setText("");
-
+        // Booking fields
         numOfGuests.setText("");
         checkInDate.setText("");
         numOfNights.setText("");
-        //breakfastTick.setText("");
-
+        // Accommodation fields
         accomType.setText("");
         accomNum.setText("");
         accomAccommodates.setText("");
         costPerNight.setText("");
         areaDesc.setText("");
-        
         breakfastTick.setSelected(false);
 
+        // Create accommodation row variable with selected item
         AccommodationRow accommodationRow = myHTable.getSelectionModel().getSelectedItem();
-        // int selectedIndex = myHTable.getSelectionModel().getSelectedIndex();
-        
+
+        // If there is an accommodation row
         if (accommodationRow != null) 
         {
-            // Retrieve the accommodation number of the selected row
-            // and find the associated accommodation object in the system.
-            // Then set the text fields with the values.
+            
             System.out.println(accommodationRow.getNumber());
             
+            // Initialise area object with chosen value
             Area area = choiceBox.getValue();
             
-            // Retrieve the values from the Accommodation Row for the selected row
-            // Example below:
+            // Get the accommodation number value
             int accommNo = Integer.valueOf(accommodationRow.getNumber());
-            // Find the associated accommodation object based on the unique
-            // accommodation number           
+            // Find accommodation based on accommodation number
             Accommodation selectedAccommodation = getAccommmdation(area, accommNo);
 
-            // Display the general accommodation info
+            // Display the accommodation information 
             accomType.setText(selectedAccommodation.getType());
             accomNum.setText(String.valueOf(accommNo));
             accomAccommodates.setText(String.valueOf(selectedAccommodation.getCapacity()));
             costPerNight.setText(String.valueOf(selectedAccommodation.getPrice()));
             areaDesc.setText(area.getDescription());
-            
+            // Get cleaning status value
             CleaningStatus cleaningStatusVal = selectedAccommodation.getCleaningStatus();
             
+            // If the value is clean
             if (cleaningStatusVal == CleaningStatus.CLEAN)
             {
+                // Set the cleaning status choice box data to index 0 (CLEAN)
                 cleaningStatus.setValue(cleaningStatusData.get(0));
             }
             else
-            {
+            {   
+                // Else - set cleaning status choice box data to index 1 (REQUIRES CLEANING)
                 cleaningStatus.setValue(cleaningStatusData.get(1));
             }
             
-            // If we have a booking then display the bookling info
+            // If the accommodation has a booking
             if (selectedAccommodation.hasGuestBooking())
             {
+                // Get the guest and booking object
                 Booking associatedGuestBooking = selectedAccommodation.getGuestBooking();
                 Guest guest = associatedGuestBooking.getGuest();
                 
+                // Initialise variables from guest object
                 String bookingFirstName = guest.getFirstName();
                 String bookingLastName = guest.getLastName();
                 String telephoneNumber = guest.getTelephoneNumber();
                 
+                // Initialise variables from booking object
                 String numberOfGuests = String.valueOf(associatedGuestBooking.getNumberGuests());
                 String formattedDate = associatedGuestBooking.getCheckInDay().format(DateTimeFormatter.ofPattern("dd-MM-yy"));
                 boolean requiresBreakfast = associatedGuestBooking.getRequiresBreakfast();
                 String numberNights = String.valueOf(associatedGuestBooking.getDuration());
-                
-                // Set the text field
-             // Reset the fields
+
+                // Set table text values to matching variables
                 firstName.setText(bookingFirstName);
                 surname.setText(bookingLastName);
                 telNum.setText(telephoneNumber);
@@ -422,49 +374,19 @@ public class GUIController implements Initializable {
                 numOfGuests.setText(numberOfGuests);
                 checkInDate.setText(formattedDate);
                 numOfNights.setText(numberNights);
-                // breakfastTick.setText(numberNights);
                 breakfastTick.setSelected(requiresBreakfast);
                 
                 
             }
- /*           
-            // Set the text field
-            accomNum.setText(String.valueOf(accommNo));
-            
-            
-            
-        }
-    }
-            
-            // Find the associated accommodation object based on the unique
-            // accommodation number
-            /* TEMP REMOVED
-            Accommodation selectedAccommodation = getAccommmdation(accommNo);
-            
-            if (selectedAccommodation.hasGuestBooking())
-            {
-                GuestBooking associatedGuestBooking = selectedAccommodation.getGuestBooking();
-                String firstName = associatedGuestBooking.getFirstName();
-                
-                // Set the text field
-                hFirstName.setText(firstName);
-                
-            }
-*/
- /*           
-            // Set the text field
-            accomNum.setText(String.valueOf(accommNo));
-            
-            
-        }
-    }
-*/
+
         }
     } 
 
+    // Event handler for check in
     @FXML
     private void onCheckin(ActionEvent event) 
     {
+        // Get the values of each text field entered
         String firstNameVal = firstName.getText();
         String surnameVal = surname.getText();
         String telNumVal = telNum.getText();
@@ -473,10 +395,11 @@ public class GUIController implements Initializable {
         String numOfNightsVal = numOfNights.getText();
         boolean breakfastRequired = breakfastTick.isSelected();
         
+        // Date formatting
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yy");
         LocalDate checkinDate = LocalDate.parse(checkInDateVal, dateTimeFormatter);
         
-        // Constructor
+        // Construct guest and booking objects with entered values
         Guest guest = new Guest(firstNameVal, surnameVal, telNumVal);
         Booking booking = new Booking(breakfastRequired,
                             Integer.valueOf(numofGuestsVal),
@@ -484,67 +407,64 @@ public class GUIController implements Initializable {
                             Integer.valueOf(numOfNightsVal),
                             guest);
         
+        // Initialise accommodation row with selected row
         AccommodationRow accommodationRow = myHTable.getSelectionModel().getSelectedItem();
         
-        //if (accommodationRow != null) 
-        //{
-        // Retrieve the accommodation number of the selected row
-        // and find the associated accommodation object in the system.
-        // Then set the text fields with the values.
-            
+        // Initialise area object with value of chosen area
         Area area = choiceBox.getValue();
 
-        // Retrieve the values from the Accommodation Row for the selected row
-        // Example below:
+        // Get accommodation number from accomm row 
         int accommNo = Integer.valueOf(accommodationRow.getNumber());
-        // Find the associated accommodation object based on the unique
-        // accommodation number           
+
+        // Get selected accommodation 
         Accommodation selectedAccommodation = getAccommmdation(area, accommNo);
         
+        // Check in to the right accommodation passing in booking object
         selectedAccommodation.checkin(booking);
 
+        // Populate the table with chosen area
         populateTable(area);
-        
-        
     }
 
+    // Event handler for check out
     @FXML
     private void onCheckout(ActionEvent event) 
     {
-         AccommodationRow accommodationRow = myHTable.getSelectionModel().getSelectedItem();
+        // Initialise accommodation row with selected row
+        AccommodationRow accommodationRow = myHTable.getSelectionModel().getSelectedItem();
         
-        //if (accommodationRow != null) 
-        //{
-        // Retrieve the accommodation number of the selected row
-        // and find the associated accommodation object in the system.
-        // Then set the text fields with the values.
-            
+        // Initialise area object with chosen value
         Area area = choiceBox.getValue();
 
-        // Retrieve the values from the Accommodation Row for the selected row
-        // Example below:
+        // Get accom number
         int accommNo = Integer.valueOf(accommodationRow.getNumber());
-        // Find the associated accommodation object based on the unique
-        // accommodation number           
+
+        // Create accommodation object with getAccom method
         Accommodation selectedAccommodation = getAccommmdation(area, accommNo);
         
+        // On check out - set the cleaning status to requires cleaning
         selectedAccommodation.setCleaningStatus(CleaningStatus.REQUIRES_CLEANING);
         
+        // Call check out method setting guest object to null (defined in accommodation class)
         selectedAccommodation.checkOut();
         
+        // Populate the table with area details
         populateTable(area);
         
+        // Set all text fields to empty
+        // Guest fields
         firstName.setText("");
         surname.setText("");
         telNum.setText("");
-
+        // Booking fields
         numOfGuests.setText("");
         checkInDate.setText("");
         numOfNights.setText("");
-        
         breakfastTick.setSelected(false);
-        
+        // Set the cleaning status choice box to requires cleaning
         cleaningStatus.setValue(cleaningStatusData.get(1));
-        
     }
+    
+    // Calculate number of breakfasts required 
+
 }

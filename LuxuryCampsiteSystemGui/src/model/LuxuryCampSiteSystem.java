@@ -35,10 +35,14 @@ public class LuxuryCampSiteSystem {
         private void initializeData()
         {
             // Adding each individual area
-            Area hilltop = new Area("Hilltop", "A nice Hilltop experience");
-            Area wildMeadow = new Area("Wild Meadow", "");
-            Area woodland = new Area("Woodland", "");
-            Area lakeview = new Area("Cabin", "");
+            Area hilltop = new Area("Hilltop", "Nice Hilltop experience, perfect for"
+                    + " a relaxing holiday recline");
+            Area wildMeadow = new Area("Wild Meadow", "Beautiful Yurt accommodation,"
+                    + " hosting two people, perfect for couples break");
+            Area woodland = new Area("Woodland", "Lovely Woodland area, an alternative"
+                    + " for couples or friends looking to experience nature");
+            Area lakeview = new Area("Lakeview", "The perfect recline for four friends,"
+                    + " by the lake to enjoy the scenery.");
             
             // LOOPS
             // Runs through each accommodation with the number of accommodations available
