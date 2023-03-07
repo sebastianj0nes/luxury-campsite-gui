@@ -6,8 +6,7 @@ public enum CleaningStatus
     // Enum values
         // Clean/Requires Cleaning/Requires Maintenance
     CLEAN("Clean"),
-    REQUIRES_CLEANING("Requires Cleaning"),
-    REQUIRES_MAINTENANCE("Requires Maintenance");
+    REQUIRES_CLEANING("Requires Cleaning");
     
     // Initialise String cleaningStatus
     private final String cleaningStatus;

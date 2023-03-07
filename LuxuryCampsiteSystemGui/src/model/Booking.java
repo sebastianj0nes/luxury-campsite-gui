@@ -1,21 +1,22 @@
 package model;
 
 
-import java.util.Date;
+import java.time.LocalDate;
+
 
 public class Booking 
 {
         // Initialising variables
         private boolean requiresBreakfast;
 	private int numberGuests;
-	private Date checkInDay;
+	private LocalDate checkInDay;
 	private int duration;
 	private Guest guest;
         
         // Constructor
         public Booking(boolean requiresBreakfast,
                             int numberGuests,
-                            Date checkInDay,
+                            LocalDate checkInDay,
                             int duration,
                             Guest guest)
         {
@@ -40,7 +41,7 @@ public class Booking
 	}
 
         // Get check in day of guests
-	public Date getCheckInDay()
+	public LocalDate getCheckInDay()
         {
             return this.checkInDay;
 	}

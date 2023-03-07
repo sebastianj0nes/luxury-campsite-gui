@@ -5,22 +5,19 @@
  */
 package model;
 
-/**
- *
- * @author jameslear
- */
+
 public abstract class Accommodation 
 {
     
     private int accommodationNo;
-    private String cleaningStatus;
-    private GuestBooking guestBooking;
+    private CleaningStatus cleaningStatus;
+    private Booking guestBooking;
 
     public Accommodation(int accommodationNo) 
     {
         this.accommodationNo = accommodationNo;
 
-        this.cleaningStatus = "Clean";
+        this.cleaningStatus = CleaningStatus.CLEAN;
     }
 
     public int getAccommodationNo() 
@@ -33,20 +30,17 @@ public abstract class Accommodation
         this.accommodationNo = accommodationNo;
     }
 
-
-
-
-    public String getCleaningStatus() 
+    public CleaningStatus getCleaningStatus() 
     {
         return cleaningStatus;
     }
 
-    public void setCleaningStatus(String cleaningStatus) 
+    public void setCleaningStatus(CleaningStatus cleaningStatus) 
     {
         this.cleaningStatus = cleaningStatus;
     }
     
-    public void checkin(GuestBooking guestBooking)
+    public void checkin(Booking guestBooking)
     {
         this.guestBooking = guestBooking;
     }
@@ -57,7 +51,7 @@ public abstract class Accommodation
         this.guestBooking = null;
     }
     
-    public GuestBooking getGuestBooking()
+    public Booking getGuestBooking()
     {
         return this.guestBooking;
     }
@@ -74,21 +68,10 @@ public abstract class Accommodation
         return hasGuestBooking();
     }
     
-    public void setClean(boolean bClean)
-    {
-        if (bClean)
-        {
-            setCleaningStatus("Clean");
-        }
-        else
-        {
-            setCleaningStatus("Requires Cleaning");
-        }
-    }
     
     public boolean isClean()
     {
-        return (this.cleaningStatus.equals("Clean"));
+        return (this.cleaningStatus == CleaningStatus.CLEAN);
     }
     
     public boolean isAvailable()

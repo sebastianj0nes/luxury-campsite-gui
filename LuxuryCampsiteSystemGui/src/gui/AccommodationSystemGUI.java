@@ -15,10 +15,6 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-/**
- *
- * @author jameslear
- */
 
 // https://code.makery.ch/blog/javafx-8-event-handling-examples/
 // https://docs.oracle.com/javafx/2/get_started/fxml_tutorial.htm

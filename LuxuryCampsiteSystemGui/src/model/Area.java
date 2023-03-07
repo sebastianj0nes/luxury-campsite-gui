@@ -8,7 +8,7 @@ public class Area {
 	private String areaName;
 
 	private ArrayList<Accommodation> accommodations;
-
+        
 	private String areaDescription;
 
         // Constructor for area object

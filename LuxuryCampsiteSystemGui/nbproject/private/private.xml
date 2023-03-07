@@ -3,21 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/user/Desktop/Uni%20YR2/OO2/LuxuryCampsiteSystemGui/src/model/GuestBooking.java</file>
-            <file>file:/Users/user/Desktop/Uni%20YR2/OO2/LuxuryCampsiteSystemGui/src/model/GeodesicDome.java</file>
-            <file>file:/Users/user/Desktop/Uni%20YR2/OO2/LuxuryCampsiteSystemGui/src/model/SheperdHut.java</file>
-            <file>file:/Users/user/Desktop/Uni%20YR2/OO2/LuxuryCampsiteSystemGui/src/gui/GUIController.java</file>
-            <file>file:/Users/user/Desktop/Uni%20YR2/OO2/LuxuryCampsiteSystemGui/src/model/Booking.java</file>
-            <file>file:/Users/user/Desktop/Uni%20YR2/OO2/LuxuryCampsiteSystemGui/src/model/Accommodation.java</file>
-            <file>file:/Users/user/Desktop/Uni%20YR2/OO2/LuxuryCampsiteSystemGui/src/model/Cabin.java</file>
-            <file>file:/Users/user/Desktop/Uni%20YR2/OO2/LuxuryCampsiteSystemGui/src/model/CleaningStatus.java</file>
             <file>file:/Users/user/Desktop/Uni%20YR2/OO2/LuxuryCampsiteSystemGui/src/gui/AccommodationSystemGUI.java</file>
-            <file>file:/Users/user/Desktop/Uni%20YR2/OO2/LuxuryCampsiteSystemGui/src/gui/AccommodationRow.java</file>
-            <file>file:/Users/user/Desktop/Uni%20YR2/OO2/LuxuryCampsiteSystemGui/src/model/LogIn.java</file>
-            <file>file:/Users/user/Desktop/Uni%20YR2/OO2/LuxuryCampsiteSystemGui/src/model/Area.java</file>
-            <file>file:/Users/user/Desktop/Uni%20YR2/OO2/LuxuryCampsiteSystemGui/src/model/Yurt.java</file>
-            <file>file:/Users/user/Desktop/Uni%20YR2/OO2/LuxuryCampsiteSystemGui/src/model/Guest.java</file>
-            <file>file:/Users/user/Desktop/Uni%20YR2/OO2/LuxuryCampsiteSystemGui/src/model/LuxuryCampSiteSystem.java</file>
+            <file>file:/Users/user/Desktop/Uni%20YR2/OO2/LuxuryCampsiteSystemGui/src/gui/GUI.fxml</file>
+            <file>file:/Users/user/Desktop/Uni%20YR2/OO2/LuxuryCampsiteSystemGui/src/gui/GUIController.java</file>
         </group>
     </open-files>
 </project-private>
