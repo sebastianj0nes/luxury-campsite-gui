@@ -232,10 +232,12 @@ public class GUIController implements Initializable {
         // Set table with all data inputted
         myHTable.setItems(tableData);
         
+        // Calculate the stats for each area
         calculateCleaning();
+        calculateBreakfasts();
        }
     // Get accommodation method passing in an area and accommodation number
-    private Accommodation getAccommmdation(Area area, int accommNo)
+    private Accommodation getAccommodation(Area area, int accommNo)
     {
         // Array list to hold all accommodations in each area
         ArrayList<Accommodation> accommodations = area.getAccommodations();
@@ -283,7 +285,7 @@ public class GUIController implements Initializable {
             // Set accommodation number to the int value of accommodation row
             int accommNo = Integer.valueOf(accommodationRow.getNumber());
             // Create selected accommodation by calling getAccommodation passing in area and accomm number
-            Accommodation selectedAccommodation = getAccommmdation(area, accommNo);
+            Accommodation selectedAccommodation = getAccommodation(area, accommNo);
             // Set the cleaning status after getting the value
             selectedAccommodation.setCleaningStatus(cleaningStatus.getValue());
             // Populate the table with the appropriate area data
@@ -328,7 +330,7 @@ public class GUIController implements Initializable {
             // Get the accommodation number value
             int accommNo = Integer.valueOf(accommodationRow.getNumber());
             // Find accommodation based on accommodation number
-            Accommodation selectedAccommodation = getAccommmdation(area, accommNo);
+            Accommodation selectedAccommodation = getAccommodation(area, accommNo);
 
             // Display the accommodation information 
             accomType.setText(selectedAccommodation.getType());
@@ -420,15 +422,17 @@ public class GUIController implements Initializable {
         int accommNo = Integer.valueOf(accommodationRow.getNumber());
 
         // Get selected accommodation 
-        Accommodation selectedAccommodation = getAccommmdation(area, accommNo);
+        Accommodation selectedAccommodation = getAccommodation(area, accommNo);
         
         // Check in to the right accommodation passing in booking object
         selectedAccommodation.checkin(booking);
 
         // Populate the table with chosen area
         populateTable(area);
-        // Calculate cleaning required
+        
+        // Calculate the stats for each area
         calculateCleaning();
+        calculateBreakfasts();
     }
 
     // Event handler for check out
@@ -445,7 +449,7 @@ public class GUIController implements Initializable {
         int accommNo = Integer.valueOf(accommodationRow.getNumber());
 
         // Create accommodation object with getAccom method
-        Accommodation selectedAccommodation = getAccommmdation(area, accommNo);
+        Accommodation selectedAccommodation = getAccommodation(area, accommNo);
         
         // On check out - set the cleaning status to requires cleaning
         selectedAccommodation.setCleaningStatus(CleaningStatus.REQUIRES_CLEANING);
@@ -469,48 +473,70 @@ public class GUIController implements Initializable {
         // Set the cleaning status choice box to requires cleaning
         cleaningStatus.setValue(cleaningStatusData.get(1));
         
-        // Calculate the amount of required cleaning
+        // Calculate the stats for each area
         calculateCleaning();
+        calculateBreakfasts();
     }
     
-//    // Calculate number of breakfasts required 
-//    private void calculateBreakfast()
-//    {
-//        // Create int value to hold the number of breakfasts 
-//        int numBreakfasts = 0;
-//        // Loop through all breakfast rows per accommodation
-//        // If a field requires breakfast - add +1 to the total number required
-//        
-//        
-//        
-//        
-//        
-//        // Populate totalBreakfast textfield of int as string value
-//    }
-//    
+    
+    // Calculate number of breakfasts required for each accommodation
+    private void calculateBreakfasts()
+    {
+        // Create int value to hold number of breakfasts required
+        int numBreakfasts = 0;
+        
+        // Get the chosen area
+        Area selectedArea = choiceBox.getValue();
+        
+        // Create array list to hold all accommodations in the area
+        ArrayList<Accommodation> allAccoms = selectedArea.getAccommodations();
+        
+        // Loop through all accommodations 
+        for (int i =1; i <allAccoms.size()+1; i++)
+        {
+            // Get selected guest booking
+            Booking selectedBooking = getAccommodation(selectedArea,i).getGuestBooking();
+            
+            // If booking not null
+            if (selectedBooking != null)
+            {
+                // Create boolean to hold if the guest requires breakfast
+                boolean requiresBreakfast = selectedBooking.getRequiresBreakfast();
+                
+                // If they require breakfast
+                if (requiresBreakfast == true)
+                {
+                    // Add 1 to total number of breakfasts required
+                    numBreakfasts++;
+                }
+            }
+        }
+        totalBreakfast.setText(String.valueOf(numBreakfasts));
+    }
+    
+    // Calculate cleaning method for each area 
     private void calculateCleaning()
     {
         // Create int value to hold number of cleaning required
         int numCleaning = 0;
-        // Loop through all cleaning rows per accommodation
+        // Get the chosen area
         Area selectedArea = choiceBox.getValue();
         
-        // Create array list to hold all accommodations
+        // Create array list to hold all accommodations in the area
         ArrayList<Accommodation> allAccoms = selectedArea.getAccommodations();
        
         // For loop to run through all accommodations
         for (int i=1; i < allAccoms.size()+1; i++)
         {
             // Create accommodation object for each accommodation in area
-            Accommodation selectedAccommodation = getAccommmdation(selectedArea, i);
+            Accommodation selectedAccommodation = getAccommodation(selectedArea, i);
             
+            // If the selected accommodation is not null
             if (selectedAccommodation != null)
             {
-                
-            
+               
             // Create cleaning status object to get status for each accommodation
             CleaningStatus requiresCleaning = selectedAccommodation.getCleaningStatus();
-            CleaningStatus cleaningStatusVal = selectedAccommodation.getCleaningStatus();
 
             
             // If object value = requires cleaning
