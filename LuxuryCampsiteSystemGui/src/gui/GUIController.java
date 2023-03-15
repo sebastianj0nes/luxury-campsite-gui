@@ -20,6 +20,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
+import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 import model.Accommodation;
 import model.LuxuryCampSiteSystem;
 import model.Booking;
@@ -233,8 +236,7 @@ public class GUIController implements Initializable {
         myHTable.setItems(tableData);
         
         // Calculate the stats for each area
-        calculateCleaning();
-        calculateBreakfasts();
+        calculateStats();
        }
     // Get accommodation method passing in an area and accommodation number
     private Accommodation getAccommodation(Area area, int accommNo)
@@ -404,13 +406,30 @@ public class GUIController implements Initializable {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yy");
         LocalDate checkinDate = LocalDate.parse(checkInDateVal, dateTimeFormatter);
         
-        // Construct guest and booking objects with entered values
+        // Create an error alert to let the user know that booking is incomplete
+        Alert error = new Alert(AlertType.ERROR);
+        error.setHeaderText("Error, guest booking could not be completed.");
+        error.setContentText("Ensure that; 1) All guest info have the correct input. 2) The accommodation doesn't "
+                + "have a booking already and 3) The date has correct format (E.g 02-02-23)");
+        
+        
+        // Conditional statement to validate the user input
+        if (firstNameVal.isEmpty() || surnameVal.isEmpty() || telNumVal.isEmpty()
+                || numofGuestsVal.isEmpty() || numOfNightsVal.isEmpty())
+        {
+            // If input is correct, show the error Alert to the user
+            error.show();
+            // Else create the guest booking
+        } else 
+        {
+              // Construct guest and booking objects with entered values
         Guest guest = new Guest(firstNameVal, surnameVal, telNumVal);
         Booking booking = new Booking(breakfastRequired,
                             Integer.valueOf(numofGuestsVal),
                             checkinDate,
                             Integer.valueOf(numOfNightsVal),
                             guest);
+     
         
         // Initialise accommodation row with selected row
         AccommodationRow accommodationRow = myHTable.getSelectionModel().getSelectedItem();
@@ -431,8 +450,9 @@ public class GUIController implements Initializable {
         populateTable(area);
         
         // Calculate the stats for each area
-        calculateCleaning();
-        calculateBreakfasts();
+        calculateStats();
+        }
+      
     }
 
     // Event handler for check out
@@ -474,8 +494,7 @@ public class GUIController implements Initializable {
         cleaningStatus.setValue(cleaningStatusData.get(1));
         
         // Calculate the stats for each area
-        calculateCleaning();
-        calculateBreakfasts();
+        calculateStats();
     }
     
     
@@ -551,4 +570,10 @@ public class GUIController implements Initializable {
         totalReqCleaning.setText(String.valueOf(numCleaning));
     }
 
+    // Create single method to calculate all statistics
+    private void calculateStats() 
+    {
+        calculateCleaning();
+        calculateBreakfasts();
+    }
 }
