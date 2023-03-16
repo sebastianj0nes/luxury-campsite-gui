@@ -15,7 +15,15 @@ First loaded when the system is ran
 Displayed if inputs aren't matching valid types
 ![Error Message](Images/errorMsg.png)
 
-## Features
+##  Features 
+- Check-in, check-out guest using a booking system to take in details about the stay. 
+- Area dropdown to change area chosen
+- Table to display the information about accommodations in specific area
+- Validation - if guest input is incorrect to specific format, an error alert will pop up preventing check in
+- Area stats - dynamically calculating the number of breakfasts required & number of accommodations to be cleaned
+
+
+## Implementation
 Following an object-oriented approach, the following features were implemented.
 - Modelling - (Use Case, Class & Sequence Diagrams)
 - Class interface implementation - ensuring classes interact with each other
